@@ -12,8 +12,6 @@ import {
   UserCheck,
   Moon,
   Sun,
-  Menu,
-  X,
 } from 'lucide-react';
 import { PageId, User, NavigationData } from './types';
 import { cn } from './lib/utils';
@@ -74,7 +72,6 @@ export default function App() {
   const [showToast, setShowToast] = useState<{message: string, visible: boolean}>({message: '', visible: false});
   const [showPricing, setShowPricing] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
-  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const { isDark, toggle } = useTheme();
 
   const handleLogin = (userInfo: User) => {
@@ -119,42 +116,20 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-bg overflow-hidden relative">
-      {/* Mobile Sidebar Overlay */}
-      {showMobileSidebar && (
-        <div
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
-          onClick={() => setShowMobileSidebar(false)}
-        />
-      )}
-
       {/* Sidebar — Liquid Glass */}
-      <div className={cn(
-        "fixed md:static inset-y-0 left-0 z-50 transition-transform duration-300 ease-out",
-        showMobileSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-      )}>
-        <Sidebar
-          currentPage={currentPage}
-          onNavigate={(page) => { navigateTo(page); setShowMobileSidebar(false); }}
-          onReturnToLanding={() => setIsAuthenticated(false)}
-          user={user}
-          triggerToast={triggerToast}
-          isDark={isDark}
-          onCloseMobile={() => setShowMobileSidebar(false)}
-        />
-      </div>
+      <Sidebar
+        currentPage={currentPage}
+        onNavigate={navigateTo}
+        onReturnToLanding={() => setIsAuthenticated(false)}
+        user={user}
+        triggerToast={triggerToast}
+        isDark={isDark}
+      />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 relative">
         {/* Top bar with theme toggle */}
-        <header className="h-14 flex items-center justify-between px-4 md:px-6 shrink-0">
-          <button
-            onClick={() => setShowMobileSidebar(true)}
-            className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl glass text-text-secondary hover:bg-hover-accent transition-all press"
-            aria-label="打开菜单"
-          >
-            <Menu size={18} />
-          </button>
-          <div className="flex-1" />
+        <header className="h-14 flex items-center justify-end px-6 shrink-0">
           <button
             onClick={toggle}
             className="w-9 h-9 flex items-center justify-center rounded-xl glass text-text-secondary hover:bg-hover-accent transition-all press"
@@ -227,7 +202,7 @@ const GuestAvatar = ({ className }: { className?: string }) => (
   </svg>
 );
 
-function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToast, isDark, onCloseMobile }: { currentPage: PageId, onNavigate: (page: PageId) => void, onReturnToLanding: () => void, user: User | null, triggerToast: (m: string) => void, isDark: boolean, onCloseMobile?: () => void }) {
+function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToast, isDark }: { currentPage: PageId, onNavigate: (page: PageId) => void, onReturnToLanding: () => void, user: User | null, triggerToast: (m: string) => void, isDark: boolean }) {
   const [showUserPopover, setShowUserPopover] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -250,20 +225,12 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
   ];
 
   return (
-    <div className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0 h-full">
+    <aside className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0">
       <div
-        className="px-5 h-14 flex items-center justify-between border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
+        className="px-5 h-14 flex items-center border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
         onClick={onReturnToLanding}
       >
         <span className="text-xl font-semibold tracking-tight text-text">Traft</span>
-        {onCloseMobile && (
-          <button
-            onClick={(e) => { e.stopPropagation(); onCloseMobile(); }}
-            className="md:hidden p-1.5 rounded-lg hover:bg-hover-accent text-text-secondary"
-          >
-            <X size={16} />
-          </button>
-        )}
       </div>
 
       <nav className="flex-1 p-3 space-y-1 mt-2">
@@ -378,7 +345,7 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
           <p className="mt-1 opacity-60 mono tracking-tighter font-semibold">From Spark to Chart.</p>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }
 
