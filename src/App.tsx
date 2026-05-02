@@ -120,20 +120,15 @@ export default function App() {
   return (
     <div className="flex h-screen bg-bg overflow-hidden relative">
       {/* Mobile Sidebar Overlay */}
-      <AnimatePresence>
-        {showMobileSidebar && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/40 z-40 md:hidden"
-            onClick={() => setShowMobileSidebar(false)}
-          />
-        )}
-      </AnimatePresence>
+      {showMobileSidebar && (
+        <div
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setShowMobileSidebar(false)}
+        />
+      )}
 
       {/* Sidebar — Liquid Glass */}
-      <aside className={cn(
+      <div className={cn(
         "fixed md:static inset-y-0 left-0 z-50 transition-transform duration-300 ease-out",
         showMobileSidebar ? "translate-x-0" : "-translate-x-full md:translate-x-0"
       )}>
@@ -146,7 +141,7 @@ export default function App() {
           isDark={isDark}
           onCloseMobile={() => setShowMobileSidebar(false)}
         />
-      </aside>
+      </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 relative">
@@ -255,7 +250,7 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
   ];
 
   return (
-    <aside className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0 h-full">
+    <div className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0 h-full">
       <div
         className="px-5 h-14 flex items-center justify-between border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
         onClick={onReturnToLanding}
@@ -383,7 +378,7 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
           <p className="mt-1 opacity-60 mono tracking-tighter font-semibold">From Spark to Chart.</p>
         </div>
       </div>
-    </aside>
+    </div>
   );
 }
 
