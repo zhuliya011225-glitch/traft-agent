@@ -33,8 +33,10 @@ import PricingOverlay from './components/PricingOverlay';
 function useTheme() {
   const [isDark, setIsDark] = useState(() => {
     if (typeof window === 'undefined') return false;
-    const stored = localStorage.getItem('traft-theme');
-    if (stored) return stored === 'dark';
+    try {
+      const stored = localStorage.getItem('traft-theme');
+      if (stored) return stored === 'dark';
+    } catch {}
     return false; // default to light mode
   });
 
@@ -42,16 +44,23 @@ function useTheme() {
     const root = document.documentElement;
     if (isDark) root.classList.add('dark');
     else root.classList.remove('dark');
-    localStorage.setItem('traft-theme', isDark ? 'dark' : 'light');
+    try { localStorage.setItem('traft-theme', isDark ? 'dark' : 'light'); } catch {}
   }, [isDark]);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('traft-theme')) setIsDark(e.matches);
+      try {
+        if (!localStorage.getItem('traft-theme')) setIsDark(e.matches);
+      } catch {}
     };
-    mq.addEventListener('change', handler);
-    return () => mq.removeEventListener('change', handler);
+    if (mq.addEventListener) {
+      mq.addEventListener('change', handler);
+      return () => mq.removeEventListener('change', handler);
+    } else {
+      mq.addListener(handler);
+      return () => mq.removeListener(handler);
+    }
   }, []);
 
   return { isDark, toggle: () => setIsDark(v => !v) };
