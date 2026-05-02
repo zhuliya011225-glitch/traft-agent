@@ -74,14 +74,14 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
           <div className="shrink-0">
             <SplitText
               text={`${getGreeting()}, 用户0501`}
-              className="text-4xl font-semibold mb-2 tracking-tight text-text font-legacy"
+              className="text-2xl md:text-4xl font-semibold mb-2 tracking-tight text-text font-legacy"
               tag="h1"
               textAlign="left"
               delay={50}
             />
             <SplitText
               text="Traft 准备好了，今天想写点什么？"
-              className="text-2xl text-text-secondary font-medium font-legacy"
+              className="text-lg md:text-2xl text-text-secondary font-medium font-legacy"
               tag="p"
               textAlign="left"
               delay={30}
@@ -93,7 +93,7 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
           <motion.div
             initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex-1 max-w-xl bg-primary/10 border border-primary/30 rounded-[16px] flex flex-col md:flex-row items-center gap-4" style={{ width: 255, height: 136, columnGap: 16, paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 20 }}
+            className="flex-1 w-full max-w-xl bg-primary/10 border border-primary/30 rounded-2xl p-4 md:p-5 flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4"
           >
             <div className="shrink-0 bg-primary/30 text-accent" style={{ borderRadius: 12, width: 42, height: 42, paddingLeft: 10, paddingRight: 10, paddingTop: 10, paddingBottom: 10, color: '#5E7BA8' }}>
               <BrainCircuit size={22} />
@@ -188,7 +188,7 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
         {/* Left column - Trends */}
         <div className="col-span-12 lg:col-span-8 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-medium text-text tracking-tight flex items-center gap-2">
+            <h2 className="text-xl md:text-3xl font-medium text-text tracking-tight flex items-center gap-2">
               <TrendingUp size={22} className="text-accent" />
               快速展示
             </h2>
@@ -335,7 +335,7 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
         {/* Recent Projects */}
         <div className="col-span-12 space-y-4 mt-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-3xl font-medium text-text tracking-tight flex items-center gap-2">
+            <h2 className="text-xl md:text-3xl font-medium text-text tracking-tight flex items-center gap-2">
               <Clock size={22} className="text-accent" />
               最近创作
             </h2>

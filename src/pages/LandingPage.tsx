@@ -111,7 +111,7 @@ export default function LandingPage({ onLogin }: { onLogin: (user: User) => void
           className="max-w-4xl flex flex-col items-center"
         >
           <div className="mb-10 w-full">
-            <h2 className="text-5xl md:text-7xl font-extralight text-text tracking-tight leading-[1.05] font-legacy">
+            <h2 className="text-3xl md:text-5xl lg:text-7xl font-extralight text-text tracking-tight leading-[1.05] font-legacy">
               用 AI 轻松创作<br/>
               更容易涨粉的内容。
             </h2>

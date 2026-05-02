@@ -12,6 +12,8 @@ import {
   UserCheck,
   Moon,
   Sun,
+  Menu,
+  X,
 } from 'lucide-react';
 import { PageId, User, NavigationData } from './types';
 import { cn } from './lib/utils';
@@ -72,6 +74,7 @@ export default function App() {
   const [showToast, setShowToast] = useState<{message: string, visible: boolean}>({message: '', visible: false});
   const [showPricing, setShowPricing] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isDark, toggle } = useTheme();
 
   const handleLogin = (userInfo: User) => {
@@ -116,20 +119,44 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-bg overflow-hidden relative">
-      {/* Sidebar — Liquid Glass */}
-      <Sidebar
-        currentPage={currentPage}
-        onNavigate={navigateTo}
-        onReturnToLanding={() => setIsAuthenticated(false)}
-        user={user}
-        triggerToast={triggerToast}
-        isDark={isDark}
-      />
+      {/* Mobile Sidebar Overlay */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden" onClick={() => setMobileMenuOpen(false)}>
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+      )}
+
+      {/* Sidebar - hidden on mobile by default, slides in when menu open */}
+      <div className={cn(
+        "shrink-0 z-50",
+        "hidden md:block",
+        mobileMenuOpen ? "block fixed inset-y-0 left-0" : "hidden md:block"
+      )}>
+        <Sidebar
+          currentPage={currentPage}
+          onNavigate={(page) => { navigateTo(page); setMobileMenuOpen(false); }}
+          onReturnToLanding={() => { setIsAuthenticated(false); setMobileMenuOpen(false); }}
+          user={user}
+          triggerToast={triggerToast}
+          isDark={isDark}
+          showCloseBtn={mobileMenuOpen}
+          onCloseMobile={() => setMobileMenuOpen(false)}
+        />
+      </div>
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 relative">
-        {/* Top bar with theme toggle */}
-        <header className="h-14 flex items-center justify-end px-6 shrink-0">
+        {/* Top bar */}
+        <header className="h-14 flex items-center justify-between px-4 md:px-6 shrink-0 border-b border-border-custom/10">
+          {/* Hamburger on mobile */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl hover:bg-hover-accent text-text-secondary transition-all"
+            aria-label="菜单"
+          >
+            <Menu size={20} />
+          </button>
+          <div className="flex-1 md:hidden" />
           <button
             onClick={toggle}
             className="w-9 h-9 flex items-center justify-center rounded-xl glass text-text-secondary hover:bg-hover-accent transition-all press"
@@ -149,7 +176,7 @@ export default function App() {
           </button>
         </header>
 
-        <main className="flex-1 overflow-y-auto px-6 pb-6 scroll-smooth custom-scrollbar">
+        <main className="flex-1 overflow-y-auto px-4 md:px-6 pb-6 scroll-smooth custom-scrollbar">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentPage}
@@ -202,7 +229,7 @@ const GuestAvatar = ({ className }: { className?: string }) => (
   </svg>
 );
 
-function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToast, isDark }: { currentPage: PageId, onNavigate: (page: PageId) => void, onReturnToLanding: () => void, user: User | null, triggerToast: (m: string) => void, isDark: boolean }) {
+function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToast, isDark, showCloseBtn, onCloseMobile }: { currentPage: PageId, onNavigate: (page: PageId) => void, onReturnToLanding: () => void, user: User | null, triggerToast: (m: string) => void, isDark: boolean, showCloseBtn?: boolean, onCloseMobile?: () => void }) {
   const [showUserPopover, setShowUserPopover] = useState(false);
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -227,10 +254,17 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
   return (
     <aside className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0">
       <div
-        className="px-5 h-14 flex items-center border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
-        onClick={onReturnToLanding}
+        className="px-5 h-14 flex items-center justify-between border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
       >
-        <span className="text-xl font-semibold tracking-tight text-text">Traft</span>
+        <span className="text-xl font-semibold tracking-tight text-text" onClick={onReturnToLanding}>Traft</span>
+        {showCloseBtn && onCloseMobile && (
+          <button
+            onClick={onCloseMobile}
+            className="p-1.5 rounded-lg hover:bg-hover-accent text-text-secondary"
+          >
+            <X size={18} />
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 p-3 space-y-1 mt-2">

@@ -64,7 +64,7 @@ export default function ProfilePage({ onBack, onSubscribe, triggerToast }: { onB
                 className="text-base font-semibold text-text border-b-2 border-primary bg-transparent text-center focus:outline-none"
               />
             ) : (
-              <h1 className="text-5xl font-semibold text-text tracking-tight">{username}</h1>
+              <h1 className="text-3xl md:text-5xl font-semibold text-text tracking-tight">{username}</h1>
             )}
             <button onClick={() => setIsEditing(!isEditing)} className="text-text-muted hover:text-primary press">
               <Edit3 size={18} />

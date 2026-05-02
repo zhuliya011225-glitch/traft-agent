@@ -164,7 +164,7 @@ export default function TrendAnalysis({ triggerToast, onNavigate, selectedPlatfo
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-5xl font-semibold text-text tracking-tight">热点选题</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold text-text tracking-tight">热点选题</h1>
         </div>
       </div>
 
@@ -384,7 +384,7 @@ export default function TrendAnalysis({ triggerToast, onNavigate, selectedPlatfo
       <div className="space-y-6">
         {/* Title + Control Bar */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-2">
-          <h2 className="text-3xl font-semibold text-text tracking-tighter">每日爆款话题池</h2>
+          <h2 className="text-xl md:text-3xl font-semibold text-text tracking-tighter">每日爆款话题池</h2>
 
           {/* 1.1 & 1.2 控制开关 */}
           <div className="flex items-center gap-3">

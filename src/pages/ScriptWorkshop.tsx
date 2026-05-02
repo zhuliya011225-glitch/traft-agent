@@ -323,9 +323,9 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
         className="hidden"
       />
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 md:mb-8">
         <div>
-          <h1 className="text-5xl font-semibold text-text tracking-tight">内容创作</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold text-text tracking-tight">内容创作</h1>
         </div>
       </div>
 
@@ -333,13 +333,13 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       <div className="apple-card flex flex-col relative group w-full">
 
         {/* ====== Header ====== */}
-        <div className="px-8 py-6 border-b border-border-custom/15 flex items-center justify-between bg-bg/30 rounded-t-2xl">
+        <div className="px-4 md:px-8 py-4 md:py-6 border-b border-border-custom/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-bg/30 rounded-t-2xl">
           {/* 左侧：图标 + 标题 + 模型选择 */}
-          <div className="flex items-center gap-4">
-            <div className="w-9 h-9 bg-primary text-white rounded-xl flex items-center justify-center shrink-0">
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="w-8 h-8 md:w-9 md:h-9 bg-primary text-white rounded-xl flex items-center justify-center shrink-0">
               <PenTool size={18} />
             </div>
-            <p className="text-base font-semibold text-text uppercase tracking-widest">脚本编辑器</p>
+            <p className="text-sm md:text-base font-semibold text-text uppercase tracking-widest">脚本编辑器</p>
 
             {/* 模型选择下拉 — 向下弹出 */}
             <div className="relative ml-1">
@@ -405,10 +405,10 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
         <div className="flex-1 flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-border-custom/15 rounded-b-2xl">
 
           {/* ----- 左侧：输入区 + 参数配置 ----- */}
-          <div className="lg:w-[520px] shrink-0 space-y-0">
+          <div className="w-full lg:w-[480px] xl:w-[520px] shrink-0 space-y-0">
 
             {/* 素材输入区 — 上传文件 和 最近项目 两个独立按钮 */}
-            <div className="p-7 space-y-4">
+            <div className="p-4 md:p-7 space-y-4">
               <label className="text-sm font-semibold text-text-muted uppercase tracking-widest flex items-center gap-2">
                 <Type size={15} className="text-primary" />
                 输入灵感 / 素材内容
@@ -418,11 +418,11 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="在此输入灵感笔记、粘贴素材或直接拖入文件..."
-                  className="w-full min-h-[180px] p-6 pb-20 bg-transparent border-none focus:outline-none text-base text-text placeholder:text-text-muted font-normal resize-none shadow-inner leading-loose"
+                  className="w-full min-h-[160px] md:min-h-[180px] p-4 md:p-6 pb-20 bg-transparent border-none focus:outline-none text-sm md:text-base text-text placeholder:text-text-muted font-normal resize-none shadow-inner leading-loose"
                 />
 
                 {/* 底部工具栏 — 上传文件 + 最近项目 分开 */}
-                <div className="absolute bottom-3 left-3 right-3 h-13 bg-card border border-border-custom/20 rounded-2xl shadow-lg z-30 flex items-center px-3">
+                <div className="absolute bottom-2 left-2 right-2 h-auto min-h-[48px] md:h-13 bg-card border border-border-custom/20 rounded-2xl shadow-lg z-30 flex flex-wrap items-center gap-1.5 px-2 md:px-3 py-1.5">
                   {/* 左：上传文件按钮 + 菜单 */}
                   <div className="flex items-center gap-2">
                     <div className="relative">
@@ -445,7 +445,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                               initial={{ opacity: 0, scale: 0.95, y: 8 }}
                               animate={{ opacity: 1, scale: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.95, y: 8 }}
-                              className="absolute bottom-full left-0 mb-3 w-[380px] bg-card border border-border-custom/20 rounded-2xl shadow-2xl z-20 p-5 space-y-3"
+                              className="absolute bottom-full left-0 mb-3 w-[300px] md:w-[380px] bg-card border border-border-custom/20 rounded-2xl shadow-2xl z-20 p-4 md:p-5 space-y-3"
                             >
                               <p className="text-base font-semibold text-text uppercase tracking-widest">上传初稿</p>
                               <p className="text-lg text-text-muted leading-relaxed">
@@ -499,7 +499,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                               initial={{ opacity: 0, scale: 0.95, y: 8 }}
                               animate={{ opacity: 1, scale: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.95, y: 8 }}
-                              className="absolute bottom-full left-0 mb-3 w-[320px] bg-card border border-border-custom/20 rounded-2xl shadow-2xl z-20 overflow-hidden"
+                              className="absolute bottom-full left-0 mb-3 w-[280px] md:w-[320px] bg-card border border-border-custom/20 rounded-2xl shadow-2xl z-20 overflow-hidden"
                             >
                               <div className="px-4 py-3 border-b border-border-custom/15 flex items-center gap-2">
                                 <History size={14} className="text-text-muted" />
@@ -588,7 +588,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
             <div className="border-t border-border-custom/15">
               <button
                 onClick={() => setShowConfigPanel(!showConfigPanel)}
-                className="w-full px-7 py-5 flex items-center justify-between hover:bg-hover-accent transition-colors press"
+                className="w-full px-4 md:px-7 py-4 md:py-5 flex items-center justify-between hover:bg-hover-accent transition-colors press"
               >
                 <span className="text-base font-semibold text-text-muted uppercase tracking-widest flex items-center gap-2">
                   <BrainCircuit size={15} className="text-primary" />
@@ -605,7 +605,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <div className="px-7 pb-7 space-y-6">
+                    <div className="px-4 md:px-7 pb-5 md:pb-7 space-y-5 md:space-y-6">
 
                       {/* 发布平台选择 */}
                       <div className="space-y-2">
@@ -808,7 +808,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
           <div className="flex-1 flex flex-col min-w-0">
 
             {/* 编辑器工作区 */}
-            <div className="flex-1 relative p-8 flex flex-col">
+            <div className="flex-1 relative p-4 md:p-8 flex flex-col">
               <div className="flex-1 relative">
                 <AnimatePresence mode="wait">
                   {editorContent ? (
@@ -819,14 +819,14 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                       ref={editorRef}
                       value={editorContent}
                       onChange={(e) => setEditorContent(e.target.value)}
-                      className="w-full h-full bg-transparent border-none focus:ring-0 text-base font-normal text-text-secondary leading-relaxed resize-none custom-scrollbar"
+                      className="w-full h-full bg-transparent border-none focus:ring-0 text-sm md:text-base font-normal text-text-secondary leading-relaxed resize-none custom-scrollbar"
                     />
                   ) : (
                     <motion.div
                       key="empty"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="h-full flex flex-col items-center justify-center text-center py-16"
+                      className="h-full flex flex-col items-center justify-center text-center py-12 md:py-16"
                     >
                       <div className="w-16 h-16 bg-bg rounded-2xl flex items-center justify-center mb-5 text-text-muted">
                         <Sparkles size={28} />
@@ -895,7 +895,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
 
             {/* 元数据栏 */}
             {editorContent && (
-              <div className="px-8 py-5 bg-bg border-t border-border-custom/20 flex items-center justify-around gap-8 shrink-0">
+              <div className="px-4 md:px-8 py-4 md:py-5 bg-bg border-t border-border-custom/20 flex items-center justify-around gap-4 md:gap-8 shrink-0">
                 <div className="text-center">
                   <p className="text-base font-semibold text-text-muted uppercase tracking-widest mb-1">建议片长</p>
                   <div className="flex items-center gap-2">
@@ -924,7 +924,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
             <div className="border-t border-border-custom/15">
               <button
                 onClick={() => setShowTemplates(!showTemplates)}
-                className="w-full px-8 py-4 flex items-center justify-between hover:bg-hover-accent transition-colors press"
+                className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between hover:bg-hover-accent transition-colors press"
               >
                 <span className="text-base font-semibold text-text-muted uppercase tracking-widest flex items-center gap-2">
                   <History size={14} className="text-primary" />
@@ -942,14 +942,14 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                     transition={{ duration: 0.25 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-8 pb-6 space-y-3">
+                    <div className="px-4 md:px-8 pb-4 md:pb-6 space-y-3">
                       {topTemplates.map((tmpl, i) => (
                         <motion.div
                           key={tmpl.id}
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: i * 0.1 }}
-                          className="bg-bg border border-border-custom/15 rounded-2xl p-5 flex items-center justify-between gap-4"
+                          className="bg-bg border border-border-custom/15 rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4"
                         >
                           <div className="flex-1 min-w-0 space-y-2">
                             <div className="flex items-center gap-2">
@@ -980,7 +980,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
             <div className="border-t border-border-custom/15">
               <button
                 onClick={() => setShowSettings(!showSettings)}
-                className="w-full px-8 py-4 flex items-center justify-between hover:bg-hover-accent transition-colors press"
+                className="w-full px-4 md:px-8 py-3 md:py-4 flex items-center justify-between hover:bg-hover-accent transition-colors press"
               >
                 <span className="text-base font-semibold text-text-muted uppercase tracking-widest flex items-center gap-2">
                   <Sparkles size={14} className="text-primary" />
@@ -997,8 +997,8 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.25 }}
                   >
-                    <div className="px-8 pb-6 space-y-4">
-                      <form onSubmit={handleOptimizationSubmit} className="flex gap-3">
+                    <div className="px-4 md:px-8 pb-4 md:pb-6 space-y-4">
+                      <form onSubmit={handleOptimizationSubmit} className="flex flex-col sm:flex-row gap-3">
                         <input
                           type="text"
                           value={optimizationPrompt}

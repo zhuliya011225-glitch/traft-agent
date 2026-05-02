@@ -267,7 +267,7 @@ export default function DistributionOpt({ triggerToast, selectedPlatform }: { tr
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-5xl font-semibold text-text tracking-tight">发布优化</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold text-text tracking-tight">发布优化</h1>
         </div>
         <div className="flex items-center gap-3">
           {/* 当前平台（只读） */}

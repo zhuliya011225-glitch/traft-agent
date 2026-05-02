@@ -280,7 +280,7 @@ export default function GrowthAnalysis({ triggerToast }: { triggerToast: (m: str
       {/* Header + Platform Selector */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
-          <h1 className="text-5xl font-semibold text-text tracking-tight">增长分析</h1>
+          <h1 className="text-3xl md:text-5xl font-semibold text-text tracking-tight">增长分析</h1>
         </div>
 
         <div className="flex items-center gap-3">

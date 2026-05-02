@@ -94,7 +94,7 @@ function SecuritySection({ triggerToast }: { triggerToast: (m: string) => void }
   return (
     <div className="space-y-12">
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">账户安全概览</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">账户安全概览</h2>
         <div className="apple-card p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -123,7 +123,7 @@ function SecuritySection({ triggerToast }: { triggerToast: (m: string) => void }
       </section>
 
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">修改密码</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">修改密码</h2>
         <div className="apple-card p-8 space-y-6">
            <p className="text-base font-normal text-amber-600 bg-amber-50 p-4 rounded-xl border border-amber-100 dark:bg-amber-900/20 dark:border-amber-800/30">
               提示：临时体验账号暂不支持修改密码，请绑定手机或邮箱后再试。
@@ -149,7 +149,7 @@ function SecuritySection({ triggerToast }: { triggerToast: (m: string) => void }
       </section>
 
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">多因素认证 (MFA)</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">多因素认证 (MFA)</h2>
         <div className="apple-card p-8 flex items-center justify-between">
            <div>
               <h3 className="font-normal text-text">二次验证开关</h3>
@@ -166,7 +166,7 @@ function SecuritySection({ triggerToast }: { triggerToast: (m: string) => void }
 
       <section>
          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-3xl font-semibold text-text">敏感操作记录</h2>
+            <h2 className="text-xl md:text-3xl font-semibold text-text">敏感操作记录</h2>
             <button className="text-sm font-semibold text-primary hover:underline uppercase tracking-widest press">查看全部记录</button>
          </div>
          <div className="apple-card bg-bg p-8 text-center">
@@ -184,7 +184,7 @@ function PrivacySection({ triggerToast }: { triggerToast: (m: string) => void })
   return (
     <div className="space-y-12">
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">数据处理说明</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">数据处理说明</h2>
         <div className="grid gap-6">
           <div className="apple-card p-8 flex gap-6 items-start">
             <div className="p-3 bg-bg rounded-2xl text-primary"><Database size={24} /></div>
@@ -204,7 +204,7 @@ function PrivacySection({ triggerToast }: { triggerToast: (m: string) => void })
       </section>
 
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">隐私偏好设置</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">隐私偏好设置</h2>
         <div className="apple-card divide-y divide-[#18202B]/10 dark:divide-[#D3DFF2]/10 overflow-hidden">
            <div className="p-8 flex items-center justify-between hover:bg-hover-accent transition-colors cursor-pointer press" onClick={() => setImproveModel(!improveModel)}>
               <div className="max-w-md">
@@ -240,7 +240,7 @@ function DevicesSection({ triggerToast }: { triggerToast: (m: string) => void })
   return (
     <section>
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold text-text">当前已登录设备</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text">当前已登录设备</h2>
         <button 
           onClick={() => triggerToast('已下线其他 2 个设备')}
           className="text-base font-semibold text-red-500 hover:bg-red-50 px-4 py-2 rounded-xl transition-all uppercase tracking-widest press dark:hover:bg-red-900/20"
@@ -281,7 +281,7 @@ function DevicesSection({ triggerToast }: { triggerToast: (m: string) => void })
 function AppsSection() {
   return (
     <section>
-      <h2 className="text-3xl font-semibold text-text mb-8">三方应用授权</h2>
+      <h2 className="text-xl md:text-3xl font-semibold text-text mb-8">三方应用授权</h2>
       <div className="apple-card flex flex-col items-center justify-center text-center py-16 px-6">
          <div className="w-16 h-16 bg-bg rounded-2xl flex items-center justify-center mb-5 text-text-muted">
             <Share2 size={28} />
@@ -299,7 +299,7 @@ function DataSection({ triggerToast }: { triggerToast: (m: string) => void }) {
   return (
     <div className="space-y-12">
       <section>
-        <h2 className="text-3xl font-semibold text-text mb-6">数据管理</h2>
+        <h2 className="text-xl md:text-3xl font-semibold text-text mb-6">数据管理</h2>
         <div className="grid md:grid-cols-2 gap-6">
            <div className="apple-card p-8 flex flex-col justify-between h-[240px]">
               <div>

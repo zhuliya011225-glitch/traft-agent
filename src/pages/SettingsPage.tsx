@@ -64,7 +64,7 @@ export default function SettingsPage({ triggerToast }: { triggerToast: (m: strin
     <div className="space-y-10 pb-12 h-full pt-4">
       <header className="flex justify-between items-start">
         <div>
-          <h1 className="text-5xl font-semibold mb-3 tracking-tight flex items-center gap-4 text-text">
+          <h1 className="text-3xl md:text-5xl font-semibold mb-3 tracking-tight flex items-center gap-4 text-text">
             <Settings className="text-primary" /> 配置中心
           </h1>
           <p className="text-text-muted font-normal">管理您的 AI 创作偏好、接入密钥与数据安全性</p>
@@ -89,7 +89,7 @@ export default function SettingsPage({ triggerToast }: { triggerToast: (m: strin
             transition={{ delay: idx * 0.1 }}
             className="space-y-6"
           >
-            <h2 className="text-3xl font-semibold uppercase tracking-[0.25em] text-text-muted flex items-center gap-2 mb-6">
+            <h2 className="text-xl md:text-3xl font-semibold uppercase tracking-[0.25em] text-text-muted flex items-center gap-2 mb-6">
               <section.icon size={14} className="text-primary" />
               {section.title}
             </h2>
