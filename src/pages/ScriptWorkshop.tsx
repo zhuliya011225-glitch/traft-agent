@@ -70,6 +70,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   const [showConfigPanel, setShowConfigPanel] = useState(true);
 
   const availableModels = [
+    { id: 'zhipu-glm4', name: '智谱 GLM-4-Flash', desc: '当前使用，三层融合生成' },
     { id: 'gemini-pro', name: 'Gemini 1.5 Pro', desc: '全能型，适合复杂创作' },
     { id: 'gpt-4o', name: 'GPT-4o', desc: '快速响应，适合快速迭代' },
     { id: 'claude-sonnet', name: 'Claude 3.5 Sonnet', desc: '深度理解，适合精细调整' },
