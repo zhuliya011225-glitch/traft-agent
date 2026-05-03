@@ -58,6 +58,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   const [isGenerating, setIsGenerating] = useState(false);
   const [editorContent, setEditorContent] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const editorRef = useRef<HTMLTextAreaElement>(null);
 
   // Settings & Optimization State
   const [showSettings, setShowSettings] = useState(true);
