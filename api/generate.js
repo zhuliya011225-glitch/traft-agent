@@ -44,7 +44,7 @@ function buildSystemPrompt(scriptType, intensity, tempo, opening, platform) {
 - "万能" → "高效/实用"
 
 【输出格式】
-请严格按照以下格式输出，脚本内容和拍摄建议用 ---SHOOTING--- 分隔：
+请严格按照以下格式输出完整脚本（包含拍摄建议在内）：
 
 # 【标题】
 （15字以内的吸睛标题）
@@ -57,8 +57,6 @@ function buildSystemPrompt(scriptType, intensity, tempo, opening, platform) {
 
 ## 结尾引导
 （引导点赞/关注/评论）
-
----SHOOTING---
 
 ## 拍摄建议
 - 镜头：...

@@ -21,7 +21,6 @@ import {
   History,
   Layout,
   X,
-  Camera,
 } from 'lucide-react';
 
 import { motion, AnimatePresence } from 'motion/react';
@@ -58,8 +57,6 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   // Generation & Editor State
   const [isGenerating, setIsGenerating] = useState(false);
   const [editorContent, setEditorContent] = useState<string>('');
-  const [shootingAdvice, setShootingAdvice] = useState<string>('');
-  const editorRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Settings & Optimization State
@@ -252,16 +249,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       const data = await res.json();
       if (data.error) { triggerToast(`生成失败: ${data.error}`); setIsGenerating(false); return; }
 
-      // 分离脚本内容和拍摄建议
-      const fullScript = data.script;
-      const shootingMatch = fullScript.match(/---SHOOTING---\s*([\s\S]*)$/);
-      if (shootingMatch) {
-        setEditorContent(fullScript.replace(/---SHOOTING---\s*[\s\S]*$/, '').trim());
-        setShootingAdvice(shootingMatch[1].trim());
-      } else {
-        setEditorContent(fullScript);
-        setShootingAdvice('');
-      }
+      setEditorContent(data.script);
       setIsGenerating(false);
       triggerToast(`AI 脚本已生成！`);
     } catch (err) {
@@ -294,15 +282,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       const data = await res.json();
       if (data.error) { triggerToast(`优化失败: ${data.error}`); setIsOptimizing(false); return; }
 
-      const fullScript = data.script;
-      const shootingMatch = fullScript.match(/---SHOOTING---\s*([\s\S]*)$/);
-      if (shootingMatch) {
-        setEditorContent(fullScript.replace(/---SHOOTING---\s*[\s\S]*$/, '').trim());
-        setShootingAdvice(shootingMatch[1].trim());
-      } else {
-        setEditorContent(fullScript);
-        setShootingAdvice('');
-      }
+      setEditorContent(data.script);
       setOptimizationPrompt('');
       setIsOptimizing(false);
       triggerToast("脚本已优化完成！");
@@ -830,23 +810,19 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
           <div className="flex-1 flex flex-col min-w-0">
 
             {/* 编辑器工作区 */}
-            <div className="flex-1 relative p-4 md:p-8 flex flex-col overflow-y-auto custom-scrollbar">
-              <div className="flex-1 relative min-h-[200px]">
+            <div className="flex-1 relative p-4 md:p-8 flex flex-col">
+              <div className="flex-1 relative">
                 <AnimatePresence mode="wait">
                   {editorContent ? (
-                    <motion.div
+                    <motion.textarea
                       key="editor"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="w-full min-h-full"
-                    >
-                      {/* 可编辑的富文本区域，敏感词标红 */}
-                      <EditableScript
-                        content={editorContent}
-                        onChange={setEditorContent}
-                        forbiddenWords={Object.keys(forbiddenWords)}
-                      />
-                    </motion.div>
+                      ref={editorRef}
+                      value={editorContent}
+                      onChange={(e) => setEditorContent(e.target.value)}
+                      className="w-full h-full bg-transparent border-none focus:ring-0 text-sm md:text-base font-normal text-text-secondary leading-relaxed resize-none custom-scrollbar"
+                    />
                   ) : (
                     <motion.div
                       key="empty"
@@ -863,28 +839,6 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                   )}
                 </AnimatePresence>
               </div>
-
-              {/* 拍摄建议卡片 */}
-              <AnimatePresence>
-                {shootingAdvice && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    className="mt-6 bg-primary/5 border-2 border-primary/20 rounded-2xl p-5 space-y-3"
-                  >
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center">
-                        <Camera size={16} className="text-primary" />
-                      </div>
-                      <p className="text-base font-semibold text-text uppercase tracking-widest">拍摄建议</p>
-                    </div>
-                    <div className="text-sm md:text-base text-text-secondary leading-relaxed whitespace-pre-wrap">
-                      {shootingAdvice}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
               {/* 2.3 违禁词检测提示 */}
               <AnimatePresence>
@@ -1079,37 +1033,5 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
         </div>
       </div>
     </div>
-  );
-}
-
-// 可编辑脚本组件，敏感词标红
-function EditableScript({ content, onChange, forbiddenWords }: { content: string, onChange: (v: string) => void, forbiddenWords: string[] }) {
-  const divRef = useRef<HTMLDivElement>(null);
-
-  // 将文本渲染为带高亮的HTML
-  const renderHighlighted = (text: string) => {
-    let result = text;
-    forbiddenWords.forEach(word => {
-      const regex = new RegExp(`(${word})`, 'g');
-      result = result.replace(regex, '<mark class="bg-red-100 text-red-600 rounded px-0.5 font-semibold">$1</mark>');
-    });
-    return result;
-  };
-
-  const handleInput = () => {
-    if (divRef.current) {
-      onChange(divRef.current.innerText);
-    }
-  };
-
-  return (
-    <div
-      ref={divRef}
-      contentEditable
-      suppressContentEditableWarning
-      onInput={handleInput}
-      className="w-full min-h-[200px] bg-transparent border-none focus:outline-none text-sm md:text-base font-normal text-text-secondary leading-relaxed whitespace-pre-wrap"
-      dangerouslySetInnerHTML={{ __html: renderHighlighted(content) }}
-    />
   );
 }
