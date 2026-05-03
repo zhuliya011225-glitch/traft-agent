@@ -452,7 +452,7 @@ export default function GrowthAnalysis({ triggerToast }: { triggerToast: (m: str
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[600px]">
                 <thead>
-                  <tr className="bg-bg/50">
+                  <tr className="bg-bg">
                     <th className="px-8 py-4 text-sm font-semibold text-text-secondary uppercase tracking-widest">日期</th>
                     <th className="px-4 py-4 text-sm font-semibold text-text-secondary uppercase tracking-widest">作品标题</th>
                     <th className="px-4 py-4 text-sm font-semibold text-text-secondary uppercase tracking-widest">播放量</th>

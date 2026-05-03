@@ -229,7 +229,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   const [activeReplaceWord, setActiveReplaceWord] = useState<string | null>(null);
 
   const handleGenerate = async () => {
-    if (!inputText) {
+    if (!inputText || !inputText.trim()) {
       triggerToast("请输入初稿内容");
       return;
     }
@@ -251,7 +251,10 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       const data = await res.json();
       if (data.error) { triggerToast(`生成失败: ${data.error}`); setIsGenerating(false); return; }
 
-      setEditorContent(data.script);
+      const script = data.script || '';
+      // 安全截断，防止内容过长导致渲染问题
+      const safeScript = script.length > 8000 ? script.slice(0, 8000) + '\n\n[内容过长，已截断]' : script;
+      setEditorContent(safeScript);
       setIsGenerating(false);
       triggerToast(`AI 脚本已生成！`);
     } catch (err) {
@@ -284,7 +287,9 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       const data = await res.json();
       if (data.error) { triggerToast(`优化失败: ${data.error}`); setIsOptimizing(false); return; }
 
-      setEditorContent(data.script);
+      const script = data.script || '';
+      const safeScript = script.length > 8000 ? script.slice(0, 8000) + '\n\n[内容过长，已截断]' : script;
+      setEditorContent(safeScript);
       setOptimizationPrompt('');
       setIsOptimizing(false);
       triggerToast("脚本已优化完成！");
@@ -337,7 +342,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
       <div className="apple-card flex flex-col relative group w-full">
 
         {/* ====== Header ====== */}
-        <div className="px-4 md:px-8 py-4 md:py-6 border-b border-border-custom/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-bg/30 rounded-t-2xl">
+        <div className="px-4 md:px-8 py-4 md:py-6 border-b border-border-custom/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-bg rounded-t-2xl">
           {/* 左侧：图标 + 标题 + 模型选择 */}
           <div className="flex items-center gap-3 flex-wrap">
             <div className="w-8 h-8 md:w-9 md:h-9 bg-primary text-white rounded-xl flex items-center justify-center shrink-0">

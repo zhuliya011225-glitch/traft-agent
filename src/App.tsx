@@ -330,7 +330,7 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
                   className="absolute bottom-full left-0 mb-3 w-56 glass border border-border-custom/30 rounded-2xl shadow-2xl overflow-hidden p-3 z-50 text-text"
                 >
                   <div className="space-y-1">
-                    <div className="px-3 py-2.5 mb-1 bg-bg/50 flex items-center gap-3 rounded-xl border border-border-custom/20">
+                    <div className="px-3 py-2.5 mb-1 bg-bg flex items-center gap-3 rounded-xl border border-border-custom/20">
                       <div className="w-8 h-8 rounded-lg bg-card flex items-center justify-center text-accent shadow-sm border border-border-custom/20">
                         <GuestAvatar className="p-1.5" />
                       </div>

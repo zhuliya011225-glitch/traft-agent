@@ -342,7 +342,7 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
           </div>
 
           <div className="apple-card overflow-hidden">
-            <div className="grid grid-cols-12 gap-4 px-5 py-4 bg-bg/50 text-text-secondary border-b border-border-custom/15">
+            <div className="grid grid-cols-12 gap-4 px-5 py-4 bg-bg text-text-secondary border-b border-border-custom/15">
               <div className="col-span-6 font-medium text-sm uppercase tracking-[0.15em]">项目标题与描述</div>
               <div className="col-span-2 font-medium text-sm uppercase tracking-[0.15em] text-center">状态</div>
               <div className="col-span-2 font-medium text-sm uppercase tracking-[0.15em] text-center">发布渠道</div>
@@ -352,7 +352,7 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
 
             <div className="divide-y divide-[#18202B]/10 dark:divide-[#D3DFF2]/10">
               {recentProjects.map((proj) => (
-                <div key={proj.id} className="p-5 hover:bg-bg/40 transition-colors group">
+                <div key={proj.id} className="p-5 hover:bg-hover-accent transition-colors group">
                   <div className="grid grid-cols-12 gap-4 items-center">
                     <div className="col-span-6">
                       <div className="space-y-0.5">

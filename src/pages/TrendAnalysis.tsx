@@ -230,7 +230,7 @@ export default function TrendAnalysis({ triggerToast, onNavigate, selectedPlatfo
                       className="absolute top-full left-0 right-0 mt-3 bg-card border border-border-custom/20 rounded-2xl shadow-2xl z-40 overflow-hidden flex min-h-[380px]"
                     >
                       {/* Left Sidebar: Categories */}
-                      <div className="w-[160px] bg-bg/80 border-r border-border-custom/15 py-6 overflow-y-auto max-h-[380px] custom-scrollbar">
+                      <div className="w-[160px] bg-bg border-r border-border-custom/15 py-6 overflow-y-auto max-h-[380px] custom-scrollbar">
                         {CONTENT_CATEGORIES.map((cat) => (
                           <button
                             key={cat.id}

@@ -152,7 +152,7 @@ export default function LandingPage({ onLogin }: { onLogin: (user: User) => void
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowLogin(false)}
-              className="absolute inset-0 bg-bg/80 backdrop-blur-md"
+              className="absolute inset-0 bg-bg"
             />
             
             <motion.div
