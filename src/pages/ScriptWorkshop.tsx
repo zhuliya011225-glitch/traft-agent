@@ -62,7 +62,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   // Settings & Optimization State
   const [showSettings, setShowSettings] = useState(true);
   const [showModelDropdown, setShowModelDropdown] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('gemini-pro');
+  const [selectedModel, setSelectedModel] = useState('zhipu-glm4');
   const [optimizationPrompt, setOptimizationPrompt] = useState('');
   const [isOptimizing, setIsOptimizing] = useState(false);
 
@@ -79,11 +79,12 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
     if (initialData) {
       if (initialData.type === 'project') {
         const p = initialData.data as Project;
-        setInputText(p.content || p.title);
+        const text = p.content || p.title || '';
+        setInputText(text + (text ? '\n\n' : '') + '请根据以上内容生成脚本...');
         triggerToast("已加载项目内容");
       } else {
         const t = initialData.data as TrendTopic;
-        setInputText(`【热点采用】${t.title}\n\n在这里展开你的创作思路...`);
+        setInputText(`【热点采用】${t.title}\n\n请根据以上热点话题生成脚本...`);
         triggerToast("已填充热点话题");
       }
       onClearInitialData?.();
@@ -108,7 +109,8 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
   }, [editorContent]);
 
   const handleSelectRecent = (project: Project) => {
-    setInputText(project.content || project.title);
+    const text = project.content || project.title || '';
+    setInputText(text + (text ? '\n\n' : '') + '请根据以上内容生成脚本...');
     setShowRecentMenu(false);
     triggerToast(`已切换至: ${project.title}`);
   };

@@ -12,7 +12,7 @@ export default function PricingOverlay({ isOpen, onClose }: PricingOverlayProps)
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/30 backdrop-blur-xl overflow-y-auto">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/60 overflow-y-auto">
            <button onClick={onClose} className="absolute top-10 right-10 text-text-muted hover:text-text transition-colors z-[210] press">
               <X size={32} />
            </button>

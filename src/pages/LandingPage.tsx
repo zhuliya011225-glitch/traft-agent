@@ -29,22 +29,22 @@ export default function LandingPage({ onLogin }: { onLogin: (user: User) => void
     { 
       name: '热点选题', 
       function: '实时捕捉全网爆火热点，深度预测流量趋势，匹配高转化创作方向。', 
-      models: ['GPT-4o', 'Claude 3.5 Sonnet']
+      models: ['智谱 GLM-4', 'GPT-4o']
     },
     { 
       name: '内容创作', 
       function: '从灵感到成稿，一站式生成爆款视频脚本、文章大纲与个性化内容润色。', 
-      models: ['Gemini 1.5 Pro', 'Llama 3 (70B)']
+      models: ['智谱 GLM-4-Flash', 'Gemini 1.5 Pro']
     },
     { 
       name: '发布优化', 
       function: '基于社交推荐算法，提供黄金发布窗口建议、标题 A/B 测试与标签优化。', 
-      models: ['DeepSeek-V2', 'Mistral Large']
+      models: ['智谱 GLM-4', 'DeepSeek-V2']
     },
     { 
       name: '增长分析', 
       function: '深度拆解内容盈亏表现，分析粉丝画像与互动语义，驱动长效增长决策。', 
-      models: ['Gemini 1.5 Flash', 'GPT-4o-mini']
+      models: ['智谱 GLM-4-Flash', 'GPT-4o-mini']
     },
   ];
 
@@ -58,7 +58,7 @@ export default function LandingPage({ onLogin }: { onLogin: (user: User) => void
         </div>
 
         {/* 功能导航 */}
-        <div className="hidden md:flex items-center bg-card/40 backdrop-blur-md border border-border-custom/20 px-6 py-2 rounded-full space-x-8">
+        <div className="hidden md:flex items-center bg-card border border-border-custom/20 px-6 py-2 rounded-full space-x-8">
           {agents.map((agent) => (
             <div key={agent.name} className="group relative">
               <button className="flex items-center gap-2 text-sm font-black text-text-muted hover:text-text transition-all uppercase tracking-[0.15em] hover:scale-110 press">
