@@ -182,7 +182,8 @@ ${hookStrategy[opening] || hookStrategy['question']}
 1. 语言口语化、有画面感，适合直接对着镜头念
 2. 必须从素材出发，不能凭空编造
 3. 保留"人味"，允许不完美、有瑕疵的表达方式
-4. 时长控制在 30-90 秒的口播量`;`
+4. 时长控制在 30-90 秒的口播量
+`;
 }
 
 export default async function handler(req, res) {
