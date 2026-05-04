@@ -43,6 +43,7 @@ const RECENT_SCRIPTS = [
 ];
 
 const AVAILABLE_MODELS = [
+  { id: 'zhipu-glm4', name: '智谱 GLM-4-Flash', desc: '当前使用，真实AI分析' },
   { id: 'gemini-pro', name: 'Gemini 1.5 Pro', desc: '全能型，适合复杂创作' },
   { id: 'gpt-4o', name: 'GPT-4o', desc: '快速响应，适合快速迭代' },
   { id: 'claude-sonnet', name: 'Claude 3.5 Sonnet', desc: '深度理解，适合精细调整' },
@@ -180,6 +181,9 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
+  // AI生成的真实策略数据
+  const [aiStrategy, setAiStrategy] = useState<any>(null);
+
   // 自动填充从ScriptWorkshop传递的脚本
   useEffect(() => {
     if (initialScript && initialScript !== scriptContent) {
@@ -187,22 +191,14 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
       // 如果有平台且脚本非空，自动触发分析
       if (selectedPlatform && initialScript.trim() && !isAnalyzed) {
         setTimeout(() => {
-          setIsAnalyzing(true);
-          triggerToast(`正在使用 ${AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name} 生成分发策略...`);
-          setTimeout(() => {
-            setIsAnalyzing(false);
-            setIsAnalyzed(true);
-            const base = MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书'];
-            setDisplayTags(filterLowEffTags(base.tags, autoReplaceLowEffTags));
-            triggerToast("分发策略已生成！");
-          }, 1500);
+          handleAnalyze(initialScript);
         }, 300);
       }
     }
   }, [initialScript, selectedPlatform]);
 
   // 模型选择
-  const [selectedModel, setSelectedModel] = useState('gemini-pro');
+  const [selectedModel, setSelectedModel] = useState('zhipu-glm4');
   const [showModelDropdown, setShowModelDropdown] = useState(false);
 
   // 3.1 个人化发布时间
@@ -221,31 +217,55 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
     return tags.filter(t => !LOW_EFFICIENCY_TAGS.includes(t));
   };
 
-  const handleImport = () => {
-    if (!scriptContent) return;
+  const handleAnalyze = async (content?: string) => {
+    const text = content || scriptContent;
+    if (!text) return;
     if (!selectedPlatform) {
       triggerToast("请先选择发布平台");
       return;
     }
     setIsAnalyzing(true);
-    triggerToast(`正在使用 ${AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name} 生成分发策略...`);
-    setTimeout(() => {
-      setIsAnalyzing(false);
+    triggerToast('正在调用 AI 分析脚本并生成分发策略...');
+
+    try {
+      const res = await fetch('/api/distribute', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          scriptContent: text,
+          platform: selectedPlatform,
+          lockedStyle: lockedStyle,
+        }),
+      });
+      const data = await res.json();
+      if (data.error) {
+        triggerToast(`生成失败: ${data.error}`);
+        setIsAnalyzing(false);
+        return;
+      }
+
+      setAiStrategy(data.strategy);
+      setDisplayTags(filterLowEffTags(data.strategy.tags || [], autoReplaceLowEffTags));
       setIsAnalyzed(true);
-      // 初始化标签
-      const base = MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书'];
-      setDisplayTags(filterLowEffTags(base.tags, autoReplaceLowEffTags));
-      triggerToast("分发策略已生成！");
-    }, 1500);
+      triggerToast('分发策略已生成！');
+    } catch (err) {
+      triggerToast('生成失败，请检查网络');
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
+  const handleImport = () => {
+    handleAnalyze();
   };
 
   // 当自动替换开关变化时，重新过滤标签
   useEffect(() => {
     if (isAnalyzed && selectedPlatform) {
-      const base = (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']).tags;
+      const base = aiStrategy?.tags || (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']).tags;
       setDisplayTags(filterLowEffTags(base, autoReplaceLowEffTags));
     }
-  }, [autoReplaceLowEffTags, isAnalyzed, selectedPlatform]);
+  }, [autoReplaceLowEffTags, isAnalyzed, selectedPlatform, aiStrategy]);
 
   const handleSyncTags = () => {
     if (!selectedPlatform) return;
@@ -253,7 +273,7 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
     triggerToast("正在同步本领域热门标签...");
     setTimeout(() => {
       const hot = HOT_TAGS_POOL[selectedPlatform] || [];
-      const base = (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']).tags;
+      const base = aiStrategy?.tags || (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']).tags;
       // 合并并去重，优先保留原标签，补充热门标签
       const merged = Array.from(new Set([...base, ...hot])).slice(0, 10);
       setDisplayTags(filterLowEffTags(merged, autoReplaceLowEffTags));
@@ -268,12 +288,16 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
     triggerToast("已加载历史脚本记录");
   };
 
-  const current = selectedPlatform ? (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']) : null;
+  // 优先使用AI生成的策略，否则回退到Mock
+  const current = aiStrategy || (selectedPlatform ? (MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书']) : null);
   const personalBest = selectedPlatform ? PERSONAL_BEST_TIME[selectedPlatform] : null;
 
   // 根据风格锁定获取标题
   const getDisplayTitles = () => {
     if (!current || !selectedPlatform) return [];
+    // 如果有AI生成的真实策略，直接使用AI生成的标题（AI已根据风格参数生成）
+    if (aiStrategy?.titles) return aiStrategy.titles;
+    // 回退到Mock数据
     if (lockedStyle === 'auto' || !TITLES_BY_STYLE[selectedPlatform]?.[lockedStyle]) {
       return current.titles;
     }
@@ -633,7 +657,7 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
                 <div>
                   <h3 className="text-xl font-semibold text-text tracking-tight">发布窗口推荐</h3>
                   <p className="text-base font-semibold text-text-muted uppercase tracking-widest mt-0.5">
-                    分发几率 {current.confidence}%
+                    分发几率 {current.confidence || 90}%
                   </p>
                 </div>
               </div>
