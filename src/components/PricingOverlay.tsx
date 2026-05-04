@@ -42,9 +42,9 @@ export default function PricingOverlay({ isOpen, onClose }: PricingOverlayProps)
               {/* Plus */}
               <PricingCard 
                 title="Plus"
-                price="14"
-                oldPrice="29"
-                discount="20% OFF"
+                price="59"
+                oldPrice="99"
+                discount="限时优惠"
                 subtitle="常规创作者，副业变现"
                 featured
                 features={[
@@ -62,9 +62,9 @@ export default function PricingOverlay({ isOpen, onClose }: PricingOverlayProps)
               {/* Pro */}
               <PricingCard 
                 title="Pro"
-                price="69"
-                oldPrice="89"
-                discount="30% OFF"
+                price="199"
+                oldPrice="299"
+                discount="限时优惠"
                 subtitle="专业人士和工作室"
                 features={[
                   '2,000 次/月 AI 调用额度',
@@ -102,18 +102,18 @@ function PricingCard({ title, price, subtitle, features, featured, oldPrice, dis
       <div className="mb-10">
         <h3 className="text-2xl font-black text-text mb-2 flex items-center gap-3">
           {title}
-          {discount && <span className="bg-[#18202B] text-white text-xs px-3 py-1 rounded-full uppercase tracking-widest">{discount}</span>}
+          {discount && <span className="bg-[#18202B] text-white text-sm px-3 py-1 rounded-full uppercase tracking-widest">{discount}</span>}
         </h3>
-        <p className="text-text-muted text-xs font-medium">{subtitle}</p>
+        <p className="text-text-muted text-sm font-medium">{subtitle}</p>
       </div>
 
       <div className="mb-10 flex items-baseline gap-2">
         {price === "免费" ? (
-          <span className="text-5xl font-black text-text tracking-tighter">免费</span>
+          <span className="text-6xl font-black text-text tracking-tighter">¥0</span>
         ) : (
           <>
-            <span className="text-5xl font-black text-text mono tracking-tighter">${price}</span>
-            {oldPrice && <span className="text-text-muted line-through text-lg mono">${oldPrice}</span>}
+            <span className="text-6xl font-black text-text mono tracking-tighter">¥{price}</span>
+            {oldPrice && <span className="text-text-muted line-through text-xl mono">¥{oldPrice}</span>}
           </>
         )}
       </div>
@@ -128,8 +128,8 @@ function PricingCard({ title, price, subtitle, features, featured, oldPrice, dis
       <div className="space-y-4 flex-1">
         {features.map((f: string) => (
           <div key={f} className="flex items-start gap-3">
-            <Check size={16} className="text-[#18202B] mt-0.5 shrink-0" />
-            <span className="text-xs text-text-secondary font-medium leading-relaxed">{f}</span>
+            <Check size={18} className="text-[#18202B] mt-0.5 shrink-0" />
+            <span className="text-sm text-text-secondary font-medium leading-relaxed">{f}</span>
           </div>
         ))}
       </div>

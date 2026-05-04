@@ -625,19 +625,19 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className={cn("p-5 rounded-2xl group cursor-pointer transition-all border border-transparent hover:border-border-custom/20", c.color || "bg-bg")}
+                      className="p-5 rounded-2xl group cursor-pointer transition-all border border-border-custom/15 hover:border-primary/30 bg-bg"
                     >
                       <div className="flex items-center gap-3 mb-2">
-                        <Layout size={14} className={cn(c.textColor || "text-text")} />
-                        <span className={cn("text-sm font-semibold uppercase tracking-[0.2em]", c.textColor || "text-text")}>
+                        <Layout size={14} className="text-primary" />
+                        <span className="text-sm font-semibold uppercase tracking-[0.2em] text-text">
                           {c.type}
                         </span>
                       </div>
-                      <p className={cn("text-base font-normal leading-relaxed opacity-70", c.textColor || "text-text-secondary")}>
+                      <p className="text-base font-normal leading-relaxed text-text-secondary">
                         {c.desc}
                       </p>
                       <div className="mt-4 flex justify-end">
-                        <ChevronRight size={14} className={cn("opacity-0 group-hover:opacity-100 transition-all", c.textColor || "text-text-muted")} />
+                        <ChevronRight size={14} className="opacity-0 group-hover:opacity-100 transition-all text-text-muted" />
                       </div>
                     </motion.div>
                   ))}
@@ -663,20 +663,12 @@ export default function DistributionOpt({ triggerToast, selectedPlatform, initia
               </div>
 
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="bg-bg rounded-2xl p-6 text-center border border-border-custom/15">
+                <div className="md:col-span-1 bg-bg rounded-2xl p-6 text-center border border-border-custom/15">
                   <span className="text-base font-semibold text-primary uppercase tracking-[0.2em] mb-2 block">推荐时机</span>
                   <span className="text-base font-semibold text-text tracking-tighter">{adoptedPersonalTime && personalBest ? `${personalBest.day} ${personalBest.time}` : current.time}</span>
                 </div>
-                <div className="md:col-span-2 bg-bg rounded-2xl p-6 border border-border-custom/15">
-                  <p className="text-base font-semibold text-text-secondary uppercase tracking-widest mb-3">推荐理由</p>
-                  <div className="space-y-2">
-                    {current.reasons.map((r, i) => (
-                      <div key={i} className="flex items-center gap-2 text-base font-normal text-text-secondary">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
-                        {r}
-                      </div>
-                    ))}
-                  </div>
+                <div className="md:col-span-2 bg-bg rounded-2xl p-6 text-center border border-border-custom/15 flex items-center justify-center">
+                  <p className="text-base font-normal text-text-muted">AI 已根据脚本内容与平台算法推荐最佳发布时间</p>
                 </div>
               </div>
 
