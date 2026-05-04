@@ -253,7 +253,7 @@ function Sidebar({ currentPage, onNavigate, onReturnToLanding, user, triggerToas
   ];
 
   return (
-    <aside className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0">
+    <aside className="w-52 border-r border-border-custom/20 glass flex flex-col shrink-0 h-screen overflow-y-auto custom-scrollbar">
       <div
         className="px-5 h-14 flex items-center justify-between border-b border-border-custom/20 cursor-pointer hover:opacity-80 transition-opacity"
       >

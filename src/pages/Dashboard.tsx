@@ -74,14 +74,14 @@ export default function Dashboard({ onNavigate, triggerToast }: { onNavigate: (p
           <div className="shrink-0">
             <SplitText
               text={`${getGreeting()}, 用户0501`}
-              className="text-2xl md:text-4xl font-semibold mb-2 tracking-tight text-text font-legacy"
+              className="text-3xl md:text-5xl font-bold mb-2 tracking-tight text-text font-legacy"
               tag="h1"
               textAlign="left"
               delay={50}
             />
             <SplitText
               text="Traft 准备好了，今天想写点什么？"
-              className="text-lg md:text-2xl text-text-secondary font-medium font-legacy"
+              className="text-base md:text-xl text-text-secondary font-light font-legacy"
               tag="p"
               textAlign="left"
               delay={30}

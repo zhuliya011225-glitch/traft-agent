@@ -886,7 +886,7 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                                   initial={{ opacity: 0, y: -4, scale: 0.95 }}
                                   animate={{ opacity: 1, y: 0, scale: 1 }}
                                   exit={{ opacity: 0, y: -4, scale: 0.95 }}
-                                  className="absolute bottom-full mb-2 left-0 bg-card border border-border-custom/20 rounded-xl shadow-xl z-50 overflow-hidden min-w-[140px]"
+                                  className="absolute top-full mt-2 left-0 bg-card border border-border-custom/20 rounded-xl shadow-xl z-50 overflow-hidden min-w-[140px]"
                                 >
                                   {forbiddenWords[word]?.map((replacement, idx) => (
                                     <button
