@@ -39,7 +39,7 @@ const MOCK_RECENT_PROJECTS: Project[] = [
   { id: '5', title: '知乎问答：内容营销方案', subtitle: '如何写出高赞回答', content: '针对知乎社区调性，从专业性、故事性、互动性三个维度出发...', updatedAt: '1周前', platform: '知乎', status: 'published' },
 ];
 
-export default function ScriptWorkshop({ triggerToast, initialData, onClearInitialData, onNavigate, selectedPlatform, setSelectedPlatform }: { triggerToast: (m: string) => void, initialData?: NavigationData | null, onClearInitialData?: () => void, onNavigate?: (page: string) => void, selectedPlatform: string | null, setSelectedPlatform: (p: string | null) => void }) {
+export default function ScriptWorkshop({ triggerToast, initialData, onClearInitialData, onNavigate, selectedPlatform, setSelectedPlatform, onSaveScript }: { triggerToast: (m: string) => void, initialData?: NavigationData | null, onClearInitialData?: () => void, onNavigate?: (page: string) => void, selectedPlatform: string | null, setSelectedPlatform: (p: string | null) => void, onSaveScript?: (script: string) => void }) {
 
   // Input State
   const [inputText, setInputText] = useState('');
@@ -405,6 +405,11 @@ export default function ScriptWorkshop({ triggerToast, initialData, onClearIniti
                   triggerToast("请先选择发布平台");
                   return;
                 }
+                if (!editorContent) {
+                  triggerToast("请先生成脚本");
+                  return;
+                }
+                onSaveScript?.(editorContent);
                 onNavigate?.('distribution');
               }}
               className="bg-primary px-5 py-2.5 rounded-xl text-base font-semibold text-white hover:bg-primary/90 transition-all uppercase tracking-widest press"

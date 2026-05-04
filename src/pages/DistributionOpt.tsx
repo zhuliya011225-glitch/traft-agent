@@ -174,11 +174,32 @@ const MOCK_SUGGESTIONS: Record<string, SuggestionData> = {
   },
 };
 
-export default function DistributionOpt({ triggerToast, selectedPlatform }: { triggerToast: (m: string) => void, selectedPlatform: string | null }) {
-  const [scriptContent, setScriptContent] = useState('');
+export default function DistributionOpt({ triggerToast, selectedPlatform, initialScript }: { triggerToast: (m: string) => void, selectedPlatform: string | null, initialScript?: string }) {
+  const [scriptContent, setScriptContent] = useState(initialScript || '');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isAnalyzed, setIsAnalyzed] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+
+  // 自动填充从ScriptWorkshop传递的脚本
+  useEffect(() => {
+    if (initialScript && initialScript !== scriptContent) {
+      setScriptContent(initialScript);
+      // 如果有平台且脚本非空，自动触发分析
+      if (selectedPlatform && initialScript.trim() && !isAnalyzed) {
+        setTimeout(() => {
+          setIsAnalyzing(true);
+          triggerToast(`正在使用 ${AVAILABLE_MODELS.find(m => m.id === selectedModel)?.name} 生成分发策略...`);
+          setTimeout(() => {
+            setIsAnalyzing(false);
+            setIsAnalyzed(true);
+            const base = MOCK_SUGGESTIONS[selectedPlatform] || MOCK_SUGGESTIONS['小红书'];
+            setDisplayTags(filterLowEffTags(base.tags, autoReplaceLowEffTags));
+            triggerToast("分发策略已生成！");
+          }, 1500);
+        }, 300);
+      }
+    }
+  }, [initialScript, selectedPlatform]);
 
   // 模型选择
   const [selectedModel, setSelectedModel] = useState('gemini-pro');

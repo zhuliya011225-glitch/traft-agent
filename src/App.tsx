@@ -75,6 +75,7 @@ export default function App() {
   const [showPricing, setShowPricing] = useState(false);
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentScript, setCurrentScript] = useState<string>('');
   const { isDark, toggle } = useTheme();
 
   const handleLogin = (userInfo: User) => {
@@ -103,8 +104,8 @@ export default function App() {
     switch (page) {
       case 'dashboard': return <Dashboard onNavigate={navigateTo} triggerToast={toast} />;
       case 'trend': return <TrendAnalysis triggerToast={toast} onNavigate={navigateTo} selectedPlatform={selectedPlatform} setSelectedPlatform={setSelectedPlatform} />;
-      case 'workshop': return <ScriptWorkshop triggerToast={toast} initialData={navigationData} onClearInitialData={() => setNavigationData(null)} onNavigate={navigateTo} selectedPlatform={selectedPlatform} setSelectedPlatform={setSelectedPlatform} />;
-      case 'distribution': return <DistributionOpt triggerToast={toast} selectedPlatform={selectedPlatform} />;
+      case 'workshop': return <ScriptWorkshop triggerToast={toast} initialData={navigationData} onClearInitialData={() => setNavigationData(null)} onNavigate={navigateTo} selectedPlatform={selectedPlatform} setSelectedPlatform={setSelectedPlatform} onSaveScript={setCurrentScript} />;
+      case 'distribution': return <DistributionOpt triggerToast={toast} selectedPlatform={selectedPlatform} initialScript={currentScript} />;
       case 'growth': return <GrowthAnalysis triggerToast={toast} />;
       case 'settings': return <SettingsPage triggerToast={toast} />;
       case 'profile': return <ProfilePage onBack={() => navigateTo('dashboard')} onSubscribe={() => setShowPricing(true)} triggerToast={toast} />;
